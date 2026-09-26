@@ -1,6 +1,6 @@
 # Handover — davidsugianto.github.io
 
-State as of commit `9dd7c14` on `master` (pushed 2026-09-26), plus **uncommitted** terminal-style redesign (ponytail.dev look) in the working tree — built and browser-verified 2026-09-26, not yet committed/pushed.
+State as of commit `0b4fbaa` on `master` (pushed 2026-09-26): terminal-style redesign (ponytail.dev look), built and browser-verified before push.
 
 ## What the site is
 - Astro 7 static site, deployed to GitHub Pages at https://davidsugianto.github.io.
@@ -44,7 +44,7 @@ Repo setting required once: Settings → Pages → Source: **GitHub Actions**. N
 ## Open items
 1. **Cekat.AI entry** (`src/data/resume.ts`, first `experience` item): currently `summary: 'In progress — details coming soon.'`, `highlights: []`. Owner will supply real summary/highlights. A draft (inferred from Cekat.AI’s public product info, not confirmed) was proposed: platform/infra for the omnichannel AI customer-service product — K8s/IaC, CI/CD, observability across WhatsApp/Instagram/Facebook/LiveChat, LLM/cloud cost tracking, on-call/runbooks, internal tooling. Needs owner’s real tools and tasks before use.
 2. ByteDance role still reads “Site Reliability Engineer” (actual job title, intentionally kept). `site.description` (meta + hero sub-line) still starts with “Site Reliability Engineer…” while `role` is “Platform Engineer” — ask owner whether to change.
-3. Commit and push the redesign; then verify the GitHub Actions deploy succeeded and the live site shows it (first-ever deploy also still unconfirmed).
+3. Verify the GitHub Actions deploy of `0b4fbaa` succeeded and the live site shows the redesign (first-ever deploy also still unconfirmed).
 4. Blog has no posts; `/blog/` and `/rss.xml` exist but are unlinked from nav.
 
 ## Verification tips
