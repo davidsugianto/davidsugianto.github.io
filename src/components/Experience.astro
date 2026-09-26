@@ -4,81 +4,90 @@ import { experience } from '../data/resume';
 ---
 
 <Section id="experience" title="Experience">
-  <div class="timeline">
+  <div class="jobs">
     {
-      experience.map((item, index) => (
-        <div class="entry">
-          <span class="dot" aria-hidden="true" />
-          {index < experience.length - 1 && <span class="line" aria-hidden="true" />}
-          <article class="timeline-card">
-            <header>
-              <div>
-                <h3>{item.role}</h3>
-                <p class="company">{item.company}</p>
-              </div>
-              <span class="period">{item.period}</span>
-            </header>
-            {item.summary && <p class="summary">{item.summary}</p>}
+      experience.map((item) => (
+        <article class="panel">
+          <div class="bar">
+            <span class="company">{item.company}</span>
+            <span>{item.period}</span>
+          </div>
+          <div class="body">
+            <h3>{item.role}</h3>
+            {item.summary && <p class="cmt">// {item.summary}</p>}
             {item.highlights.length > 0 && (
-              <ul class="bullets">
+              <ul class="adds">
                 {item.highlights.map((highlight) => (
-                  <li>
-                    <span class="bullet" aria-hidden="true" />
-                    <span>{highlight}</span>
-                  </li>
+                  <li>{highlight}</li>
                 ))}
               </ul>
             )}
-          </article>
-        </div>
+          </div>
+        </article>
       ))
     }
   </div>
 </Section>
 
 <style>
-  .entry {
+  .jobs {
+    display: grid;
+    gap: 20px;
+  }
+
+  .panel {
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    overflow: hidden;
+    background: var(--panel);
+  }
+
+  .bar {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 8px 14px;
+    border-bottom: 1px solid var(--line);
+    color: var(--dim);
+    font-size: 0.74rem;
+  }
+
+  .company {
+    color: var(--amber);
+  }
+
+  .body {
+    padding: 14px 16px;
+  }
+
+  h3 {
+    font-size: 1.05rem;
+  }
+
+  .cmt {
+    margin: 6px 0 0;
+    font-size: 0.88rem;
+  }
+
+  .adds {
+    margin: 12px 0 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: 6px;
+  }
+
+  .adds li {
     position: relative;
-    margin-bottom: 3rem;
+    padding-left: 2ch;
+    font-size: 0.88rem;
+    line-height: 1.7;
   }
 
-  .entry:last-child {
-    margin-bottom: 0;
-  }
-
-  .dot {
+  .adds li::before {
+    content: '+';
     position: absolute;
-    top: -0.5rem;
-    left: 50%;
-    z-index: 2;
-    width: 1rem;
-    height: 1rem;
-    border-radius: 50%;
-    background: var(--accent);
-    transform: translateX(-50%);
-  }
-
-  .line {
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    z-index: 1;
-    width: 2px;
-    height: 3rem;
-    background: var(--border);
-    transform: translate(-50%, 100%);
-  }
-
-  .summary {
-    margin: 0 0 1rem;
-    font-size: 0.875rem;
-    font-style: italic;
-    color: var(--muted);
-  }
-
-  @media (min-width: 640px) {
-    .summary {
-      font-size: 1rem;
-    }
+    left: 0;
+    color: var(--grn);
   }
 </style>

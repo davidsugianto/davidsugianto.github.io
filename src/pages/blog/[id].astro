@@ -14,10 +14,10 @@ const { title, description, pubDate, updatedDate } = post.data;
 ---
 
 <BaseLayout title={title} description={description}>
-  <div class="container page">
+  <div class="wrap page">
     <article class="prose">
       <h1>{title}</h1>
-      <p class="muted">
+      <p class="dim">
         <time datetime={pubDate.toISOString()}>{formatDate(pubDate)}</time>
         {
           updatedDate && (

@@ -46,4 +46,4 @@ Pushing to `master` runs `.github/workflows/deploy.yml`, which builds the site a
 
 One-time repository setting: **Settings → Pages → Build and deployment → Source: GitHub Actions**.
 
-Design adapted from [devportfolio](https://github.com/RyanFitzgerald/devportfolio) (MIT, see `LICENSE-devportfolio.md`).
+Terminal-style design inspired by [ponytail.dev](https://ponytail.dev).

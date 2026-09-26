@@ -1,10 +1,10 @@
 # Handover — davidsugianto.github.io
 
-State as of commit `9dd7c14` on `master` (pushed 2026-09-26).
+State as of commit `9dd7c14` on `master` (pushed 2026-09-26), plus **uncommitted** terminal-style redesign (ponytail.dev look) in the working tree — built and browser-verified 2026-09-26, not yet committed/pushed.
 
 ## What the site is
 - Astro 7 static site, deployed to GitHub Pages at https://davidsugianto.github.io.
-- Design ported from [devportfolio](https://github.com/RyanFitzgerald/devportfolio) (MIT, `LICENSE-devportfolio.md`), in plain CSS (no Tailwind), IBM Plex Mono via `@fontsource/ibm-plex-mono`, dark/light toggle.
+- Terminal/code-editor design inspired by [ponytail.dev](https://ponytail.dev), in plain CSS (no Tailwind), JetBrains Mono via `@fontsource-variable/jetbrains-mono`, dark/light toggle (dark default on first visit; choice stored in `localStorage.theme`).
 - Routes: `/` (one-pager), `/blog/`, `/blog/<id>/`, `/404`, `/rss.xml`, `/sitemap-index.xml`, `/DAVID_SUGIANTO_RESUME.pdf` (generated at build).
 - Old Jekyll site was removed in `9dd7c14`, including `CNAME` (no custom domain now).
 
@@ -21,30 +21,30 @@ Repo setting required once: Settings → Pages → Source: **GitHub Actions**. N
 ## Where content lives
 | File | Drives |
 |---|---|
-| `src/data/site.ts` | name, `role` (“Platform Engineer”: hero, footer, page title, PDF), email, summary (About + PDF), socials (`icon: 'github' \| 'linkedin'`), `description` (meta) |
-| `src/data/resume.ts` | `experience` (Experience section + PDF), `skills` (About chips, flattened; PDF by category), `education` |
+| `src/data/site.ts` | name, `role` (“Platform Engineer”: hero, page title, PDF), `location` (hero), email, avatar (hero + footer), summary (About + PDF), socials (hero + footer buttons), `description` (meta + hero `//` sub-line) |
+| `src/data/resume.ts` | `experience` (Experience panels + PDF), `skills` (About tag list, flattened; PDF by category), `education` |
 | `src/data/portfolio.ts` | projects: `description` shown on cards; `context`/`solution`/`impact` kept but not rendered |
 | `src/content/blog/*.md` | posts (frontmatter: title, description, pubDate, updatedDate?, draft?) |
 
 ## Page structure
 - `src/pages/index.astro`: Hero → About → Projects → Experience → Education → LatestPosts (renders only if posts exist).
-- Components in `src/components/`: `Hero`, `About`, `Projects`, `Experience`, `Education`, `LatestPosts`, `Section` (4/8 grid wrapper), `SectionTitle` (heading + accent bar), `SocialIcons`, `Header`, `Footer`, `ThemeToggle`.
-- `src/styles/global.css`: theme tokens (`--bg --fg --muted --border --surface --accent --chip --shadow-*`), `.container.page` wrapper for non-home pages, shared `.timeline-card` and `.bullets`.
+- Components in `src/components/`: `Hero`, `About`, `Projects`, `Experience`, `Education`, `LatestPosts`, `Section` (`## label` heading derived from `title`, e.g. “About Me” → `about_me`), `Header` (sticky editor chrome: dots, `~/davidsugianto`, `*.md` section tabs with scroll-spy, theme button), `Footer`, `ThemeToggle`.
+- `src/styles/global.css`: theme tokens (`--bg --panel --chrome --fg --dim --faint --line --grn --red --amber --mono`), `.wrap` (820px column), `.page` (non-home pages), `.label`, `.cur` (blinking cursor), `.btn` (`[ bracket ]` buttons; `.fill` = solid), `.rows` (hairline list used by Education, posts, blog index), `.dim`, `.cmt`.
 - `src/lib/resume-pdf.ts`: pdfkit, single A4 page; shrinks font to fit, build fails below 7pt.
 
 ## Decisions made (owner-approved)
-- Header nav: About, Projects, Experience, Education + theme toggle. Blog and Resume links removed from header; footer nav has the same 4 links, no Blog/RSS, no “design adapted from” credit (attribution stays in README + `LICENSE-devportfolio.md`).
-- Hero keeps the “Download resume (PDF)” button.
-- Sections are full width (no max-width), matching the template. Section title size is fluid at ≥1024px: `min(4.5rem, calc(100vw / 18 - 19px))` so “Experience” never overflows its 4-column cell (IBM Plex Mono = 0.6em/glyph).
-- Hero top padding is 9rem below 768px (wrapped mobile nav is ~135px tall).
-- About = summary paragraph + one flat chip list (27 skills).
-- Project cards = number, title, short description, stack chips. Descriptions were drafted by the assistant from existing text; owner may still revise.
+- Header tabs: about.md, projects.md, experience.md, education.md + theme toggle. Blog and Resume stay out of the header; footer nav has the same 4 links, no Blog/RSS.
+- Hero: GitHub avatar, name + blinking cursor, role · location, `//` description, `[ download resume ]` + email/github/linkedin buttons.
+- Single 820px column; sections separated by 1px hairlines.
+- About = summary paragraph + one flat skill tag list (27 skills).
+- Projects = numbered ladder (01, 02, …): title, short description, stack. Descriptions were drafted by the assistant from existing text; owner may still revise.
+- Experience = one diff-style panel per job (company/period bar, role, `//` summary, green `+` highlights).
 - `Experience.summary` is optional; Experience section and PDF skip missing summary/empty highlights.
 
 ## Open items
 1. **Cekat.AI entry** (`src/data/resume.ts`, first `experience` item): currently `summary: 'In progress — details coming soon.'`, `highlights: []`. Owner will supply real summary/highlights. A draft (inferred from Cekat.AI’s public product info, not confirmed) was proposed: platform/infra for the omnichannel AI customer-service product — K8s/IaC, CI/CD, observability across WhatsApp/Instagram/Facebook/LiveChat, LLM/cloud cost tracking, on-call/runbooks, internal tooling. Needs owner’s real tools and tasks before use.
-2. ByteDance role still reads “Site Reliability Engineer” (actual job title, intentionally kept). `site.description` (meta) still starts with “Site Reliability Engineer…” — ask owner whether to change.
-3. Verify first GitHub Actions deploy succeeded and live site shows the new design.
+2. ByteDance role still reads “Site Reliability Engineer” (actual job title, intentionally kept). `site.description` (meta + hero sub-line) still starts with “Site Reliability Engineer…” while `role` is “Platform Engineer” — ask owner whether to change.
+3. Commit and push the redesign; then verify the GitHub Actions deploy succeeded and the live site shows it (first-ever deploy also still unconfirmed).
 4. Blog has no posts; `/blog/` and `/rss.xml` exist but are unlinked from nav.
 
 ## Verification tips

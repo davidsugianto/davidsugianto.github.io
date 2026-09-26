@@ -1,106 +1,116 @@
 ---
 import ThemeToggle from './ThemeToggle.astro';
 
-const path = Astro.url.pathname;
-const isHome = path === '/';
-const links = [
-  { label: 'About', href: '/#about' },
-  { label: 'Projects', href: '/#projects' },
-  { label: 'Experience', href: '/#experience' },
-  { label: 'Education', href: '/#education' },
+const tabs = [
+  { id: 'about', label: 'about.md' },
+  { id: 'projects', label: 'projects.md' },
+  { id: 'experience', label: 'experience.md' },
+  { id: 'education', label: 'education.md' },
 ];
 ---
 
-<header id="site-header" class="site-header" data-solid={isHome ? undefined : ''}>
-  <nav aria-label="Main">
-    <ul>
-      {
-        links.map(({ label, href }) => (
-          <li>
-            <a href={href}>{label}</a>
-          </li>
-        ))
-      }
-    </ul>
-    <ThemeToggle />
+<header class="chrome">
+  <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
+  <a class="file" href="/">~/davidsugianto</a>
+  <nav class="tabs" aria-label="Main">
+    {tabs.map(({ id, label }) => <a class="tab" href={`/#${id}`} data-section={id}>{label}</a>)}
   </nav>
+  <ThemeToggle />
 </header>
 
 <script>
-  const header = document.getElementById('site-header');
-  if (header && !header.hasAttribute('data-solid')) {
-    const update = () => header.toggleAttribute('data-solid', window.scrollY > 100);
-    window.addEventListener('scroll', update, { passive: true });
-    update();
+  const tabs = [...document.querySelectorAll<HTMLAnchorElement>('.chrome .tab')];
+  const sections = tabs.map((t) => document.getElementById(t.dataset.section ?? '')).filter((s) => s !== null);
+  if (sections.length > 0) {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) tabs.forEach((t) => t.classList.toggle('on', t.dataset.section === entry.target.id));
+        }
+      },
+      { rootMargin: '-45% 0px -50% 0px' },
+    );
+    sections.forEach((s) => observer.observe(s));
   }
 </script>
 
 <style>
-  .site-header {
-    position: absolute;
+  .chrome {
+    position: sticky;
     top: 0;
-    left: 0;
-    right: 0;
-    z-index: 50;
-    transition: background-color 0.3s;
-  }
-
-  .site-header[data-solid] {
-    background: color-mix(in srgb, var(--bg) 80%, transparent);
-    -webkit-backdrop-filter: blur(4px);
-    backdrop-filter: blur(4px);
-  }
-
-  nav {
+    z-index: 10;
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
     align-items: center;
-    gap: 0.75rem 2rem;
-    max-width: 80rem;
-    margin-inline: auto;
-    padding: 1rem 2rem;
+    gap: 10px;
+    background: var(--chrome);
+    border-bottom: 1px solid var(--line);
+    padding: 9px 16px;
+    font-size: 12px;
   }
 
-  ul {
+  .dots {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 0.5rem 2rem;
-    margin: 0;
-    padding: 0;
-    list-style: none;
+    gap: 7px;
   }
 
-  nav a {
-    color: var(--muted);
-    font-weight: 500;
-    text-decoration: none;
-    transition: color 0.2s;
+  .dots i {
+    display: block;
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
   }
 
-  nav a:hover {
+  .dots i:nth-child(1) {
+    background: var(--red);
+  }
+
+  .dots i:nth-child(2) {
+    background: var(--amber);
+  }
+
+  .dots i:nth-child(3) {
+    background: var(--grn);
+  }
+
+  .file {
+    color: var(--dim);
+    border: 0;
+  }
+
+  .file:hover {
+    color: var(--amber);
+  }
+
+  .tabs {
+    display: flex;
+    gap: 4px;
+    min-width: 0;
+    overflow-x: auto;
+  }
+
+  .tab {
+    color: var(--dim);
+    border: 1px solid transparent;
+    border-radius: 3px;
+    padding: 2px 9px;
+    white-space: nowrap;
+    transition: color 0.12s, background 0.12s;
+  }
+
+  .tab:hover {
+    color: var(--amber);
+    background: var(--panel);
+  }
+
+  .tab.on {
     color: var(--fg);
+    background: var(--panel);
+    border-color: var(--line);
   }
 
-  nav a[aria-current='page'] {
-    color: var(--accent);
-  }
-
-  @media (max-width: 639px) {
-    nav,
-    ul {
-      gap: 0.5rem 1.25rem;
-    }
-
-    nav a {
-      font-size: 0.9rem;
-    }
-  }
-
-  @media (min-width: 768px) {
-    .site-header {
-      position: fixed;
+  @media (max-width: 560px) {
+    .file {
+      display: none;
     }
   }
 </style>
