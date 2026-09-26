@@ -1,0 +1,29 @@
+---
+import Section from './Section.astro';
+import { formatDate, getPublishedPosts } from '../lib/posts';
+
+const posts = (await getPublishedPosts()).slice(0, 3);
+---
+
+{
+  posts.length > 0 && (
+    <Section id="writing" title="Latest posts">
+      <ul class="post-list">
+        {posts.map((post) => (
+          <li>
+            <h3>
+              <a href={`/blog/${post.id}/`}>{post.data.title}</a>
+            </h3>
+            <time class="muted" datetime={post.data.pubDate.toISOString()}>
+              {formatDate(post.data.pubDate)}
+            </time>
+            <p>{post.data.description}</p>
+          </li>
+        ))}
+      </ul>
+      <p>
+        <a href="/blog/">All posts →</a>
+      </p>
+    </Section>
+  )
+}

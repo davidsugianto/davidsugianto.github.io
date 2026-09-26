@@ -1,0 +1,138 @@
+---
+import SocialIcons from './SocialIcons.astro';
+import { site } from '../data/site';
+
+const links = [
+  { label: 'About', href: '/#about' },
+  { label: 'Projects', href: '/#projects' },
+  { label: 'Experience', href: '/#experience' },
+  { label: 'Education', href: '/#education' },
+];
+---
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="col">
+      <p class="name">{site.name}</p>
+      <p class="role">{site.role}</p>
+      <div class="socials">
+        <SocialIcons />
+      </div>
+    </div>
+    <div class="col right">
+      <nav aria-label="Footer">
+        {links.map(({ label, href }) => <a href={href}>{label}</a>)}
+      </nav>
+      <p class="copy">© {new Date().getFullYear()} {site.name}. All rights reserved.</p>
+    </div>
+  </div>
+
+  <svg aria-hidden="true" class="wave" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <pattern id="footer-pattern" x="0" y="0" width="100" height="100" patternUnits="userSpaceOnUse">
+        <path d="M0 50 Q 25 40, 50 50 T 100 50" stroke="currentColor" stroke-width="0.5" fill="none" opacity="0.4"></path>
+      </pattern>
+    </defs>
+    <rect width="100%" height="100%" fill="url(#footer-pattern)"></rect>
+  </svg>
+</footer>
+
+<style>
+  .site-footer {
+    position: relative;
+    isolation: isolate;
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+  }
+
+  .footer-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    max-width: 72rem;
+    margin-inline: auto;
+    padding: 3rem 1.5rem;
+  }
+
+  .col {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .right {
+    align-items: flex-start;
+  }
+
+  p {
+    margin: 0;
+  }
+
+  .name {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--fg);
+  }
+
+  .role,
+  .copy,
+  .socials {
+    color: var(--muted);
+  }
+
+  .socials :global(.social-icons) {
+    gap: 1.5rem;
+  }
+
+  nav {
+    display: none;
+    gap: 2rem;
+  }
+
+  nav a {
+    font-size: 0.875rem;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  nav a:hover {
+    color: var(--fg);
+  }
+
+  .copy {
+    font-size: 0.875rem;
+  }
+
+  .wave {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    z-index: -1;
+    width: 100%;
+    height: 6rem;
+    color: var(--border);
+  }
+
+  @media (min-width: 768px) {
+    .footer-inner {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .right {
+      align-items: flex-end;
+    }
+
+    nav {
+      display: flex;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .footer-inner {
+      padding-inline: 2rem;
+    }
+  }
+</style>

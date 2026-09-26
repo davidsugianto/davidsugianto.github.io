@@ -1,0 +1,71 @@
+---
+import SectionTitle from './SectionTitle.astro';
+
+interface Props {
+  id: string;
+  title: string;
+}
+
+const { id, title } = Astro.props;
+---
+
+<section id={id} class="home-section">
+  <div class="grid">
+    <div class="title">
+      <SectionTitle title={title} />
+    </div>
+    <div class="body">
+      <slot />
+    </div>
+  </div>
+</section>
+
+<style>
+  .home-section {
+    padding: 2rem;
+  }
+
+  .grid {
+    display: grid;
+    gap: 2rem;
+    align-items: start;
+  }
+
+  @media (min-width: 640px) {
+    .home-section {
+      padding: 3rem;
+    }
+  }
+
+  @media (min-width: 768px) {
+    .home-section {
+      padding: 4rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .home-section {
+      padding: 6rem;
+    }
+
+    .grid {
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      gap: 4rem;
+    }
+
+    .title {
+      grid-column: span 4;
+    }
+
+    .body {
+      grid-column: span 8;
+    }
+
+    /* Full-width grid: the 4-column cell is (100vw - 896px) / 3 + 192px wide. IBM Plex Mono is
+       0.6em per glyph, so "Experience" (10 glyphs = 6em) fits while font-size ≤ 100vw / 18 - 18px
+       (1px extra for the scrollbar). Capped at the template's 4.5rem. */
+    .title :global(.section-title) {
+      font-size: min(4.5rem, calc(100vw / 18 - 19px));
+    }
+  }
+</style>

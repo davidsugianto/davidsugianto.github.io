@@ -1,0 +1,84 @@
+---
+import Section from './Section.astro';
+import { experience } from '../data/resume';
+---
+
+<Section id="experience" title="Experience">
+  <div class="timeline">
+    {
+      experience.map((item, index) => (
+        <div class="entry">
+          <span class="dot" aria-hidden="true" />
+          {index < experience.length - 1 && <span class="line" aria-hidden="true" />}
+          <article class="timeline-card">
+            <header>
+              <div>
+                <h3>{item.role}</h3>
+                <p class="company">{item.company}</p>
+              </div>
+              <span class="period">{item.period}</span>
+            </header>
+            {item.summary && <p class="summary">{item.summary}</p>}
+            {item.highlights.length > 0 && (
+              <ul class="bullets">
+                {item.highlights.map((highlight) => (
+                  <li>
+                    <span class="bullet" aria-hidden="true" />
+                    <span>{highlight}</span>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </article>
+        </div>
+      ))
+    }
+  </div>
+</Section>
+
+<style>
+  .entry {
+    position: relative;
+    margin-bottom: 3rem;
+  }
+
+  .entry:last-child {
+    margin-bottom: 0;
+  }
+
+  .dot {
+    position: absolute;
+    top: -0.5rem;
+    left: 50%;
+    z-index: 2;
+    width: 1rem;
+    height: 1rem;
+    border-radius: 50%;
+    background: var(--accent);
+    transform: translateX(-50%);
+  }
+
+  .line {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    z-index: 1;
+    width: 2px;
+    height: 3rem;
+    background: var(--border);
+    transform: translate(-50%, 100%);
+  }
+
+  .summary {
+    margin: 0 0 1rem;
+    font-size: 0.875rem;
+    font-style: italic;
+    color: var(--muted);
+  }
+
+  @media (min-width: 640px) {
+    .summary {
+      font-size: 1rem;
+    }
+  }
+</style>
