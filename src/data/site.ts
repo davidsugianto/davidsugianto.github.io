@@ -6,7 +6,7 @@ export const site = {
   url: 'https://davidsugianto.github.io',
   avatar: 'https://github.com/davidsugianto.png',
   description:
-    'Site Reliability Engineer building scalable cloud infrastructure, observability systems, and FinOps automation.',
+    'Platform Engineer building scalable cloud infrastructure, observability systems, and FinOps automation.',
   summary:
     'Engineer with 5+ years of experience building scalable cloud infrastructure, observability systems, and FinOps automation for high-traffic e-commerce platforms. Proven track record reducing manual toil by 90%, achieving 100% L0/L1 service monitoring coverage, and enabling cost-optimized, outage-free scaling during peak campaigns through predictive capacity planning and data-driven automation.',
   socials: [
